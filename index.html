@@ -4,10 +4,6 @@
 	<title>Harold's Test Week 1</title>
 	<link rel="stylesheet" href="bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="main.css">
-	<script src="jquery-2.1.4.js"></script>
-	<script src="bootstrap.min.js"></script>
-	<script src="clicker.js"></script>
-	<script src="app.js"></script>
 </head>
 <body>
 <div class="container">
@@ -34,8 +30,13 @@
 	<hr/>
     <div class="container">
     	<button id="clicker-btn" onclick="clickIt();">Click Me!</button>
-    	<div class="col-xs-2"><script>clicker.count;</script></div>
+    	<div class="col-xs-2" id="clickCountId"></div>
     </div>
 </div>
 </body>
+
+	<script src="jquery-2.1.4.js"></script>
+	<script src="bootstrap.min.js"></script>
+	<script src="clicker.js"></script>
+	<script src="app.js"></script>
 </html>
