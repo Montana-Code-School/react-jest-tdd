@@ -53,36 +53,35 @@ router.route('/:id')
     });
   })
 
-    // update with this id (accessed at PUT http://localhost:8080/api/bears/:id)
-   .put(function(req, res) {
-      Blog.findById(req.params.id, function(err, blog) {
+  // update with this id (accessed at PUT http://localhost:8080/api/bears/:id)
+  .put(function(req, res) {
+    Blog.findById(req.params.id, function(err, blog) {
+      if (err)
+        res.send(err);
+
+      console.log(req.body.title + " : " + req.body.body);
+      blog.title = req.body.title;  // update the blog info
+      blog.body = req.body.body;
+
+      // save the bear
+      blog.save(function(err) {
         if (err)
           res.send(err);
 
-        console.log(req.body.title + " : " + req.body.body);
-        blog.title = req.body.title;  // update the blog info
-        blog.body = req.body.body;
-        console.log(JSON.stringify(blog));
-
-        // save the bear
-        blog.save(function(err) {
-          if (err)
-            res.send(err);
-
-          res.json({ message: 'Blog was updated!' });
-        });
+        res.json({ message: 'Blog was updated!' });
       });
-    })
+    });
+  })
 
-   // delete with this id (accessed at DELETE http://localhost:8080/api/blogs/:id)
-   .delete(function(req, res) {
-       mongoose.model('Blog').remove({
-           _id: req.params.id
-       }, function(err, blog) {
-           if (err)
-               res.send(err);
-               res.json({ message: 'Successfully deleted' });
-       });
-   });
+  // delete with this id (accessed at DELETE http://localhost:8080/api/blogs/:id)
+  .delete(function(req, res) {
+    mongoose.model('Blog').remove({
+      _id: req.params.id
+    }, function(err, blog) {
+      if (err)
+        res.send(err);
+      res.json({ message: 'Successfully deleted' });
+    });
+  });
 
 module.exports = router; 
