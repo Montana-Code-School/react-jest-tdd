@@ -14,7 +14,7 @@ app.set('port', (process.env.PORT || 5000));
 app.use(express.static(__dirname + 'public'));
 app.use('/api/blogs', blogRoutes);
 app.get('/', function(req, res){
-    res.readFile('index.html')
+    res.readFile('public/index.html');
 });
 
 app.listen(app.get('port'), function() {
