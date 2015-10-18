@@ -20,7 +20,7 @@ $.getJSON( "https://guarded-everglades-3990.herokuapp.com/api/blog", function( d
     items.push( "<article><header><h2>" + val.title 
     	+ "</h2></header><section class=\"article-body\">" + val.body +"</section></article>" );
   });
-  $( "<section/>", {
+  $( "<div/>", {
     "class": "my-new-list",
     html: items.join( "" )
   }).appendTo( "#blog-list" );
