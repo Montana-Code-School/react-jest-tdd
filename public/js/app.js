@@ -26,10 +26,11 @@ $(window).load(function() {
 	    "class": "my-new-list",
 	    html: items.join( "" )
 	  }).appendTo( "#blog-list" );
+	  console.log("We got data from the getJSON " + items);
 	});
 	})();
 
-	console.log("Well, we got to the end of the window load javascript! " + )
+	console.log("Well, we got to the end of the window load javascript! ");
 });
 
 
