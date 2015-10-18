@@ -16,7 +16,7 @@ $(window).load(function() {
 	//to the HTML id list
 
 	(function(){
-		$.getJSON( "http://localhost:3000/api/animals", function( data ) {
+		$.getJSON( "https://guarded-everglades-3990.herokuapp.com/api/animals", function( data ) {
 			var items = [];
 			$.each( data, function( key, val ) {
 				items.push( "<li>" + val.name + " the " + val.type +"</li>" );
@@ -28,7 +28,7 @@ $(window).load(function() {
 		});
 	})();
 	
-	$.getJSON( "https://guarded-everglades-3990.herokuapp.com/api/blog", function( data ) {
+	$.getJSON( "https://guarded-everglades-3990.herokuapp.com/api/blogs", function( data ) {
 	  var items = [];
 	  console.log("We're starting to get data from getJSON " + data);
 
