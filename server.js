@@ -6,6 +6,8 @@ var bodyParser = require('body-parser');
 var db = require('./model/db');
 var blogModel = require('./model/blog');
 var blogRoutes = require('./routes/blog');
+var animalModel = require('./model/animal');
+var animalRoutes = require('./routes/animal');
 
 var app = express();
 
@@ -14,6 +16,8 @@ console.log(__dirname);
 
 app.use(express.static('public'));
 app.use('/api/blogs', blogRoutes);
+app.use('/api/animals', animalRoutes);
+
 app.get('/', function(req, res){
 	console.log(res);
 	console.log(res.url);
