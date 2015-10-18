@@ -10,11 +10,15 @@ var blogRoutes = require('./routes/blog');
 var app = express();
 
 app.set('port', (process.env.PORT || 5000));
+console.log(__dirname);
 
-app.use(express.static(__dirname + 'public'));
+app.use(express.static('public'));
 app.use('/api/blogs', blogRoutes);
 app.get('/', function(req, res){
-    res.readFile('public/index.html');
+	console.log(res);
+	console.log(res.url);
+	console.log(res.readFile);
+    res.readFile('index.html');
 });
 
 app.listen(app.get('port'), function() {
