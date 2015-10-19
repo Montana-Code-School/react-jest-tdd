@@ -36,8 +36,9 @@ router.route('/')/* GET All Blogs */
       if(err){
         res.send("houston we have a problem")
       } else {
-        console.log("New blog named " + blog + "created!");
-        res.send(blog);
+        console.log("New blog named " + blog + "created, and redirecting!");
+        res.redirect("http://localhost:5000");
+        //res.send(blog);
       }
     })
   });

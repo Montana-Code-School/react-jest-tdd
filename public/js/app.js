@@ -11,24 +11,8 @@ var showMe = function() {
 
 $(window).load(function() {
     showMe();
-
-    //This should make a request to your animals api, and append each item
-	//to the HTML id list
-
-	(function(){
-		$.getJSON( "https://guarded-everglades-3990.herokuapp.com/api/animals", function( data ) {
-			var items = [];
-			$.each( data, function( key, val ) {
-				items.push( "<li>" + val.name + " the " + val.type +"</li>" );
-			});
-			$( "<ul/>", {
-				"class": "my-new-list",
-				html: items.join( "" )
-			}).appendTo( "#list" );
-		});
-	})();
 	
-	$.getJSON( "https://guarded-everglades-3990.herokuapp.com/api/blogs", function( data ) {
+	$.getJSON( "/api/blogs", function( data ) {
 	  var items = [];
 	  console.log("We're starting to get data from getJSON " + data);
 

@@ -4,24 +4,24 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
     <div class="container">
         <div class="row">
-        <form action="https://guarded-everglades-3990.herokuapp.com/api/blogs" method="POST" role="form">
+        <form action="/api/blogs" method="POST" role="form">
             <legend>Add a blog entry!</legend>
         
             <div class="form-group">
-                <label for="">Blog Title</label>
-                <input name="title" type="text" class="form-control" id="" placeholder="Input field">
+                <label for="title">Blog Title</label>
+                <input name="title" type="text" class="form-control" id="title" placeholder="Input field">
             </div>
 
             <div class="form-group">
-                <label for="">Blog Body</label>
-                <input name="body" type="text" class="form-control" id="" placeholder="Input field" size="300">
+                <label for="body">Blog Body</label>
+                <textarea name="body" type="text" class="form-control" id="body" placeholder="Input field" rows="5"></textarea>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
