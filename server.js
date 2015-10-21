@@ -15,9 +15,6 @@ app.use(express.static('public'));
 app.use('/api/blogs', blogRoutes);
 
 app.get('/', function(req, res){
-	console.log(res);
-	console.log(res.url);
-	console.log(res.readFile);
     res.readFile('index.html');
 });
 

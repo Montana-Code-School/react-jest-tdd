@@ -3,6 +3,7 @@ var router = express.Router();
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var Blog       = require('../model/blog');
+
 router.use(bodyParser.urlencoded({ extended: true }))
 
 var validBlogs = [];
