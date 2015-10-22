@@ -9,11 +9,12 @@
   },
   "author": "Harold Shinsato",
   "dependencies": {
-    "ejs": "2.3.3",
     "body-parser": "^1.14.1",
+    "ejs": "2.3.3",
     "express": "^4.13.3",
+    "mongodb-uri": "^0.9.7",
     "mongoose": "^4.1.11",
-    "mongodb-uri": "^0.9.7"
+    "passport": "^0.3.0"
   },
   "engines": {
     "node": "0.12.7"
