@@ -38,8 +38,8 @@ router.route('/')/* GET All Blogs */
         res.send("houston we have a problem")
       } else {
         console.log("New blog named " + blog + "created, and redirecting!");
-        res.redirect("/");
-        //res.send(blog);
+        //res.redirect("/");
+        res.send(blog);
       }
     })
   });

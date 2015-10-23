@@ -9,8 +9,8 @@
 </head>
 
 <body>
-    <div class="container">
-        <div class="row">
+    <div class="container" id="blog-form"></div>
+        <!--div class="row">
         <form action="/api/blogs" method="POST" role="form">
             <legend>Add a blog entry!</legend>
         
@@ -26,14 +26,17 @@
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
         </div>
-    </div>
+    </div-->
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="js/jquery-2.1.4.min.js"></script>
-    <script src="js/bootstrap.js"></script>
-    <script src="js/main.js"></script>
-    <script src="js/app.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-md5/1.1.1/js/md5.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/JSXTransformer.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/react.js"></script>
+    <!--script src="https://cdnjs.cloudflare.com/ajax/libs/angular-gravatar/0.4.1/angular-gravatar.min.js"></script-->
+    <script type="text/jsx" src="components/BlogForm.js"></script>
 </body>
 
 </html>
