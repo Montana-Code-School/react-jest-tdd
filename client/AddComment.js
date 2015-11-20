@@ -16,17 +16,17 @@ var AddComment = React.createClass({
             dataType: 'json',
             data: data,
             type:'POST',
-                success: function(response){
-                console.log("posting data!",data, response)
-                //document.location='/blog'
-                if(self.props.onPost){
-                  self.props.onPost()
-                }
-                }.bind(this),
-                error: function(xhr, status, err){
-                    console.log("not posting data!")
-                    console.error( status, err.toString());
-                }.bind(this)
+            success: function(response){
+              console.log("posting data!",data, response);
+              //document.location='/blog'
+              if(self.props.onPost){
+                self.props.onPost()
+              }
+            }.bind(this),
+            error: function(xhr, status, err){
+              console.log("not posting data!");
+              console.error( status, err.toString());
+            }.bind(this)
         })
         this.refs.comment.getDOMNode().value = ''
         
