@@ -1,3 +1,5 @@
+var githubRoutes = require('./github');
+
 module.exports = function(app, passport) {
 
 // normal routes ===============================================================
@@ -25,6 +27,8 @@ module.exports = function(app, passport) {
         req.logout();
         res.redirect('/');
     });
+
+    app.use('/api/github', githubRoutes);
 
     // AUTHENTICATE (FIRST LOGIN) ==================================================
 

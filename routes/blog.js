@@ -3,6 +3,7 @@ var router = express.Router();
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var Blog       = require('../model/blog');
+var Comment    = require('../model/comment');
 
 router.use(bodyParser.urlencoded({ extended: true }))
 
@@ -19,7 +20,7 @@ function filterByTitle(obj) {
 
 router.route('/')/* GET All Blogs */
   .get(function(req, res) {
-    mongoose.model('Blog').find({}, function(err, blogs){
+    mongoose.model('Blog').find({}).populate('comments').exec(function(err, blogs){
      if(err){
        return console.log(err);
      } else {
@@ -48,9 +49,9 @@ router.route('/:id')
   .get(function(req, res) {
     mongoose.model('Blog').findById({
       _id: req.params.id
-    }, function(err, blog) {
+    }).populate('comments').exec(function(err, blog) {
       if (err)
-        res.send(err);            
+        res.send(err);
       res.json(blog);
     });
   })
@@ -85,5 +86,34 @@ router.route('/:id')
       res.json({ message: 'Successfully deleted' });
     });
   });
+
+router.route('/:id/comments')
+  .post(function(req, res) {
+    mongoose.model('Comment').create({
+      body: req.body.body,
+      title: req.body.title,
+      user: req.user
+    }, function(err, comment) {
+      if (err)
+        res.send(err);
+      mongoose.model('Blog').findById({
+        _id: req.params.id}, function(err, blog) {
+          if (err)
+            res.send(err);
+          blog.comments.push(comment._id);
+          blog.save();
+          res.json(comment);
+        });
+    });
+  })
+
+  .get(function(req, res) {
+    mongoose.model('Blog').findById({_id: req.params.id})
+      .populate('comments').exec(function(err, comments) {
+        if (err)
+          res.send(err);
+        res.send(comments);
+      })
+    });
 
 module.exports = router; 
