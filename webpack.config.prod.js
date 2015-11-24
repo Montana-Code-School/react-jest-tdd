@@ -5,7 +5,9 @@ module.exports = {
   devtool: 'source-map',
   entry: { 
     index: [
-      './client/index']
+      './client/index'],
+    postblog: [
+      './client/postblog']
   },
   output: {
     path: path.join(__dirname, 'static'),

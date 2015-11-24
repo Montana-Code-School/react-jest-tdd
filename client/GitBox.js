@@ -1,36 +1,35 @@
-var React = require ('react');
-var Github = require ('./Github');
+var React = require('react');
+var Github = require('./Github');
 
 var GitBox = React.createClass({
-	getInitialState: function(){
-		return {data: []};
-	},
+  getInitialState: function getInitialState() {
+    return {data: []};
+  },
 
-	loadGitData: function(){
-		$.ajax({
-			url: this.props.url,
-			dataType: 'json',
-			success: function(data){
-				console.log(data)
-				this.setState({ data: data });
-			}.bind(this), 
-			error: function(err){
-				console.log(err)
-			}.bind(this)
-		})
-	},
+  loadGitData: function loadGitData() {
+    $.ajax({
+      url: this.props.url,
+      dataType: 'json',
+      success: function success(data) {
+        this.setState({ data: data });
+      }.bind(this),
+      error: function error(err) {
+        console.log(err);
+      },
+    });
+  },
 
-	componentDidMount: function(){
-		this.loadGitData();
-	},
+  componentDidMount: function componentDidMount() {
+    this.loadGitData();
+  },
 
-	render: function() {
-		return (
-			<div>
-				<Github data={this.state.data}/>
-			</div>
-		);
-	}
-})
+  render: function render() {
+    return (
+      <div>
+        <Github data={this.state.data}/>
+      </div>
+    );
+  },
+});
 
 module.exports = GitBox;

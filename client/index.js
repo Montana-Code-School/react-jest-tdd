@@ -1,7 +1,7 @@
 var React = require('react');
+var ReactDOM = require('react-dom');
 var BlogBox = require('./BlogBox');
-var BlogList = require('./BlogList');
 var GitBox = require('./GitBox');
 
-React.render(<BlogBox url='/api/blogs/'/>, document.getElementById('blog-list'));
-React.render(<GitBox url='/api/github'/>, document.getElementById('Github'));
+ReactDOM.render(<BlogBox url="/api/blogs/"/>, document.getElementById('blog-list'));
+//ReactDOM.render(<GitBox url="/api/github"/>, document.getElementById('Github'));

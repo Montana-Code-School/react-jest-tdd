@@ -1,20 +1,21 @@
 var React = require('react');
 
 var Github = React.createClass({
-	render: function(){
-    var gitStuff = this.props.data.map(function (g){
+  render: function render() {
+    var commitInfo;
+    var gitStuff = this.props.data.map(function gitMap(g) {
       if (g.coms) {
-        var commitInfo = g.coms.map(function (c){
-          return(
+        commitInfo = g.coms.map(function commitMap(c) {
+          return (
             <div>
               <p>{c.message}</p>
               <p>{c.url}</p>
             </div>
-          )
+            );
         });
-      };
-      
-      return(
+      }
+
+      return (
         <div className="col-md-4">
           <div className="panel panel-default gitub-box">
             <h3 className="panel-header"><i className="fa fa-code-fork">
@@ -27,17 +28,15 @@ var Github = React.createClass({
             </div>
           </div>
         </div>
-      )
+      );
     });
 
-    return(
+    return (
       <div>
         {gitStuff}
       </div>
-      );
-
-	
-	}
-})
+    );
+  },
+});
 
 module.exports = Github;
