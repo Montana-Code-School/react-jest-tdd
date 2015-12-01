@@ -1,19 +1,20 @@
-var React = require('react');
-var AddComment = require('./AddComment');
-var moment = require('moment');
-var md5 = require('MD5');
+import React from 'react';
+import AddComment from './AddComment';
+import moment from 'moment';
+import md5 from 'MD5';
 var GRAVATAR_URL = "http://gravatar.com/avatar";
 
-var BlogList = React.createClass({
+class BlogList extends React.Component {
 
-  getInitialState: function(){
-    return ({
+  constructor(props) {
+    super(props);
+    this.state = {
       viewComments: false,
       user: []
-    })
-  },
+    }
+  }
 
-  loadUser: function() {
+  loadUser() {
     $.ajax({
       url: '/api/blogs/user',
       dataType: 'json',
@@ -26,13 +27,13 @@ var BlogList = React.createClass({
         console.error(status, err.toString());
       }.bind(this)
     });
-  },
+  }
 
-  componentDidMount: function(){
+  componentDidMount(){
     this.loadUser();
-  },
+  }
 
-  render: function render() {
+  render() {
     var self = this;
     var user;
 
@@ -95,8 +96,8 @@ var BlogList = React.createClass({
         {blogData}
       </section>
     );
-  },
-});
+  }
+};
 
 
 module.exports = BlogList;

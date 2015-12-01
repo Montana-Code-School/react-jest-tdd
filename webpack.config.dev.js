@@ -27,7 +27,6 @@ module.exports = {
         presets: ['es2015','react']
       },
       exclude: /node_modules/,
-      exclude: /node_modules/,
       include: path.join(__dirname, 'client')
     }]
   }

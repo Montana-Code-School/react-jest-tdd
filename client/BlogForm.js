@@ -1,14 +1,15 @@
-var React = require('react');
+import React from 'react';
 
-var BlogForm = React.createClass({
+class BlogForm extends React.Component {
 
-  getInitialState: function(){
-    return ({
+  constructor(props) {
+    super(props);
+    this.state = {
       user: []
-    })
-  },
+    }
+  }
 
-  loadUser: function() {
+  loadUser() {
     $.ajax({
       url: '/api/blogs/user',
       dataType: 'json',
@@ -21,13 +22,13 @@ var BlogForm = React.createClass({
         console.error(status, err.toString());
       }.bind(this)
     });
-  },
+  }
 
-  componentDidMount: function(){
+  componentDidMount(){
     this.loadUser();
-  },
+  }
 
-  handleSubmit: function handleSubmit(e) {
+  handleSubmit(e) {
     e.preventDefault();
     var title = this.refs.title.value;
     var body = this.refs.body.value;
@@ -51,9 +52,9 @@ var BlogForm = React.createClass({
       }.bind(this)
     });
       React.findDOMNode(this.refs.title);
-  },
+  }
 
-  render: function render() {
+  render() {
     var user;
 
     if (this.state.user.local) {
@@ -78,6 +79,6 @@ var BlogForm = React.createClass({
               </div>
            );
    }
-});
+};
 
 module.exports = BlogForm;

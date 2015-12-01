@@ -131,7 +131,6 @@ router.route('/:id/comments', isLoggedIn)
   .post(function(req, res) {
     mongoose.model('Comment').create({
       body: req.body.body,
-      title: req.body.title,
       user: req.user,
       blog: req.params.id,
     }, function(err, comment) {

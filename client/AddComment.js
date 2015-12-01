@@ -1,11 +1,11 @@
-var React = require('react');
+import React from 'react';
 
-var AddComment = React.createClass({
+class AddComment extends React.Component {
 
-  handleCommentSubmit: function handleCommentSubmit(e) {
+  handleCommentSubmit(e) {
+    console.log('handleCommentSubmit!', this.refs.comment.value);
     var body = this.refs.comment.value;
-    var title = this.refs.title.value;
-    var data = ({ title: title, body: body });
+    var data = ({ body: body });
     var blogId = this.props.blogId;
     var self = this;
     e.preventDefault();
@@ -28,21 +28,20 @@ var AddComment = React.createClass({
         console.error(status, err.toString());
       },
     });
-  },
+  }
 
-  render: function render() {
+  render() {
     return (
         <div className="box">
           <form>
               <div className="form-group">
-                <button onClick={this.handleCommentSubmit} type="submit" className="btn btn-default">Add a comment</button>
-                <input type="text" className="form-control" ref="title" placeholder="comment title"/>
+                <button onClick={this.handleCommentSubmit.bind(this)} type="submit" className="btn btn-default">Add a comment</button>
                 <input type="text" className="form-control" ref="comment" placeholder="comment text"/>
               </div>
           </form>
         </div>
           );
-  },
-});
+  }
+};
 
 module.exports = AddComment;
