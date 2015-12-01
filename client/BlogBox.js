@@ -1,13 +1,14 @@
-var React = require('react');
-var BlogList = require('./BlogList');
+import React from 'react';
+import BlogList from './BlogList';
 
-var BlogBox = React.createClass({
+class BlogBox extends React.Component {
 
-  getInitialState: function getInitialState() {
-    return {data: []};
-  },
+  constructor(props) {
+    super(props);
+    this.state = {data: []};
+  }
 
-  loadBlogFromServer: function loadBlogFromServer() {
+  loadBlogFromServer() {
     $.ajax({
       url: this.props.url,
       dataType: 'json',
@@ -19,13 +20,13 @@ var BlogBox = React.createClass({
         console.error(this.props.url, status, err.toString());
       }.bind(this),
     });
-  },
+  }
 
-  componentDidMount: function componentDidMount() {
+  componentDidMount() {
     this.loadBlogFromServer();
-  },
+  }
 
-  render: function render() {
+  render() {
     var self = this;
     var doRefresh = function() {
       self.loadBlogFromServer();
@@ -33,7 +34,7 @@ var BlogBox = React.createClass({
     return (
       <BlogList data={this.state.data} newData={doRefresh}/>
     );
-  },
-});
+  }
+};
 
 module.exports = BlogBox;

@@ -18,15 +18,31 @@ function filterByTitle(obj) {
   }
 };
 
-router.route('/')/* GET All Blogs */
+// route middleware to ensure user is logged in
+function isLoggedIn(req, res, next) {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  // if they aren't redirect them to the home page
+  res.redirect('/');
+}
+
+router.route('/')
+  /* GET All Blogs */
   .get(function(req, res) {
-    mongoose.model('Blog').find({}).populate('comments').exec(function(err, blogs){
-     if(err){
-       return console.log(err);
-     } else {
-       var arrByTitle = blogs.filter(filterByTitle);
-       res.json(arrByTitle);
-     }
+    mongoose.model('Blog').find({}).populate({
+        path:'comments',
+        populate: {
+          path:'user',
+          select:'local.email local.username'
+        }
+      }).exec(function(err, blogs){
+      if(err){
+        return console.log(err);
+      } else {
+        var arrByTitle = blogs.filter(filterByTitle);
+        res.json(arrByTitle);
+      }
     });
   })
 
@@ -45,11 +61,35 @@ router.route('/')/* GET All Blogs */
     })
   });
 
+router.route('/user')
+  .get(function(req, res) {
+    if (req.user) {
+      console.log(req.user);
+      mongoose.model('User').findById({_id: req.user._id}, function(err, user) {
+        if (err) {
+          return console.log(err);
+        } else {
+          res.json(user)
+        }
+      });
+    } else {
+      res.json({
+        user: "anonymous"
+      })
+    }
+  });
+
 router.route('/:id')
   .get(function(req, res) {
     mongoose.model('Blog').findById({
       _id: req.params.id
-    }).populate('comments').exec(function(err, blog) {
+    }).populate({
+        path:'comments',
+        populate: {
+          path:'user',
+          select:'local.email local.username'
+        }
+      }).exec(function(err, blog) {
       if (err)
         res.send(err);
       res.json(blog);
@@ -87,33 +127,62 @@ router.route('/:id')
     });
   });
 
-router.route('/:id/comments')
+router.route('/:id/comments', isLoggedIn)
   .post(function(req, res) {
     mongoose.model('Comment').create({
       body: req.body.body,
       title: req.body.title,
-      user: req.user
+      user: req.user,
+      blog: req.params.id,
     }, function(err, comment) {
-      if (err)
+      if (err) {
         res.send(err);
-      mongoose.model('Blog').findById({
-        _id: req.params.id}, function(err, blog) {
-          if (err)
-            res.send(err);
-          blog.comments.push(comment._id);
-          blog.save();
-          res.json(comment);
-        });
+      } else {
+        mongoose.model('Blog').findById({
+          _id: req.params.id}, function(err, blog) {
+            if (err) {
+              res.send(err);
+            } else {
+              blog.comments.push(comment._id);
+              blog.save();
+              res.json(comment);
+            }
+          });
+      }
     });
-  })
+  });
 
+router.route('/:id/comments')
   .get(function(req, res) {
     mongoose.model('Blog').findById({_id: req.params.id})
-      .populate('comments').exec(function(err, comments) {
-        if (err)
-          res.send(err);
-        res.send(comments);
+      .populate({
+        path:'comments',
+        populate: {
+          path:'user',
+          select:'local.email local.username'
+        }
       })
-    });
+      .exec(function(err, comments) {
+        if (err) {
+          res.send(err);
+        } else {
+          console.log(comments[0]);
+          res.send(comments);
+        }
+      })
+    })
+
+  .delete(function(req, res) {
+    //mongoose.model('Blog').findById({_id: req.params.id})
+    mongoose.model('Blog').remove({
+      _id: req.params.id
+    }, function(err, blog) {
+      if (err) {
+        res.send(err);
+      } else {
+        res.json({ message: 'Successfully deleted' });
+      }
+    })
+  });
 
 module.exports = router; 

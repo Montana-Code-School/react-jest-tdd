@@ -31,8 +31,11 @@ module.exports = {
   module: {
     loaders: [{
       test: /\.js$/,
-      loader: 'babel',
-      query: {presets:['react']},
+      loader: ['babel'],
+      query: {
+        presets: ['es2015','react']
+      },
+      exclude: /node_modules/,
       include: path.join(__dirname, 'client')
     }]
   }
