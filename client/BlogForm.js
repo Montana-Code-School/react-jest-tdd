@@ -6,7 +6,11 @@ class BlogForm extends React.Component {
     super(props);
     this.state = {
       user: []
-    }
+    };
+  }
+
+  componentDidMount() {
+    this.loadUser();
   }
 
   loadUser() {
@@ -15,17 +19,12 @@ class BlogForm extends React.Component {
       dataType: 'json',
       cache: false,
       success: function(user) {
-        console.log("USER IN AJAX", user);
         this.setState({user: user});
       }.bind(this),
       error: function(xhr, status, err) {
         console.error(status, err.toString());
       }.bind(this)
     });
-  }
-
-  componentDidMount(){
-    this.loadUser();
   }
 
   handleSubmit(e) {
@@ -42,8 +41,8 @@ class BlogForm extends React.Component {
       dataType: 'json',
       data: data,
       type: 'POST',
-      success: function(data) {
-        console.log('posting data!' + data);
+      success: function(dataSuccess) {
+        console.log('posting data!' + dataSuccess);
         document.location = '/index.html';
       }.bind(this),
       error: function(xhr, status, err) {
@@ -51,16 +50,16 @@ class BlogForm extends React.Component {
         console.error(this.props.url, status, err.toString());
       }.bind(this)
     });
-      React.findDOMNode(this.refs.title);
+    React.findDOMNode(this.refs.title);
   }
 
   render() {
     var user;
 
     if (this.state.user.local) {
-      user = this.state.user.local.username
+      user = this.state.user.local.username;
     } else {
-      user = "NO USER SIGNED IN"
+      user = 'NO USER SIGNED IN';
     }
 
     return (
@@ -78,7 +77,7 @@ class BlogForm extends React.Component {
                </form>
               </div>
            );
-   }
-};
+  }
+}
 
 module.exports = BlogForm;

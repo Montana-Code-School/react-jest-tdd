@@ -8,6 +8,10 @@ class BlogBox extends React.Component {
     this.state = {data: []};
   }
 
+  componentDidMount() {
+    this.loadBlogFromServer();
+  }
+
   loadBlogFromServer() {
     $.ajax({
       url: this.props.url,
@@ -22,10 +26,6 @@ class BlogBox extends React.Component {
     });
   }
 
-  componentDidMount() {
-    this.loadBlogFromServer();
-  }
-
   render() {
     var self = this;
     var doRefresh = function() {
@@ -35,6 +35,6 @@ class BlogBox extends React.Component {
       <BlogList data={this.state.data} newData={doRefresh}/>
     );
   }
-};
+}
 
 module.exports = BlogBox;

@@ -9,11 +9,10 @@ var commentModel = require('./model/comment');
 var blogRoutes = require('./routes/blog');
 var githubRoutes = require('./routes/github');
 var passport = require('passport');
-var flash    = require('connect-flash');
-var morgan       = require('morgan');
+var flash = require('connect-flash');
+var morgan = require('morgan');
 var cookieParser = require('cookie-parser');
-var bodyParser   = require('body-parser');
-var session      = require('express-session');
+var session = require('express-session');
 
 var app = express();
 
@@ -62,7 +61,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.set('view engine', 'ejs'); // set up ejs for templating
 
 // required for passport
-app.use(session({ secret: 'inodrinkscotchscotchyscotchscotch' })); // session secret
+app.use(session({secret: 'inodrinkscotchscotchyscotchscotch'})); // session secret
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
@@ -75,5 +74,5 @@ app.use('/api/blogs', blogRoutes);
 app.use('/api/github', githubRoutes);
 
 app.listen(app.get('port'), function() {
-	console.log('Node app is running on port', app.get('port'));
-}); 
+  console.log('Node app is running on port', app.get('port'));
+});

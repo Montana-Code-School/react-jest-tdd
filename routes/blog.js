@@ -2,21 +2,21 @@ var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
-var Blog       = require('../model/blog');
-var Comment    = require('../model/comment');
+var Blog = require('../model/blog');
+var Comment = require('../model/comment');
 
-router.use(bodyParser.urlencoded({ extended: true }))
+router.use(bodyParser.urlencoded({extended: true}));
 
 var validBlogs = [];
 
 function filterByTitle(obj) {
- if ('title' in obj && typeof(obj.title) === 'string') {
-   validBlogs.push(obj);
-   return true;
+  if ('title' in obj && typeof(obj.title) === 'string') {
+    validBlogs.push(obj);
+    return true;
   } else {
-   return false;
+    return false;
   }
-};
+}
 
 // route middleware to ensure user is logged in
 function isLoggedIn(req, res, next) {
@@ -31,13 +31,13 @@ router.route('/')
   /* GET All Blogs */
   .get(function(req, res) {
     mongoose.model('Blog').find({}).populate({
-        path:'comments',
-        populate: {
-          path:'user',
-          select:'local.email local.username'
-        }
-      }).exec(function(err, blogs){
-      if(err){
+      path: 'comments',
+      populate: {
+        path: 'user',
+        select: 'local.email local.username'
+      }
+    }).exec(function(err, blogs) {
+      if (err) {
         return console.log(err);
       } else {
         var arrByTitle = blogs.filter(filterByTitle);
@@ -46,19 +46,19 @@ router.route('/')
     });
   })
 
-  .post(function(req, res){
+  .post(function(req, res) {
     var blog = new Blog();
     blog.title = req.body.title;
     blog.body = req.body.body;
-    blog.save(function(err, blog){
-      if(err){
-        res.send("houston we have a problem")
+    blog.save(function(err, blogResult) {
+      if (err) {
+        res.send('houston we have a problem');
       } else {
-        console.log("New blog named " + blog + "created, and redirecting!");
-        //res.redirect("/");
-        res.send(blog);
+        console.log('New blog named ' + blogResult + 'created, and redirecting!');
+        // res.redirect("/");
+        res.send(blogResult);
       }
-    })
+    });
   });
 
 router.route('/user')
@@ -69,13 +69,13 @@ router.route('/user')
         if (err) {
           return console.log(err);
         } else {
-          res.json(user)
+          res.json(user);
         }
       });
     } else {
       res.json({
-        user: "anonymous"
-      })
+        user: 'anonymous'
+      });
     }
   });
 
@@ -84,14 +84,15 @@ router.route('/:id')
     mongoose.model('Blog').findById({
       _id: req.params.id
     }).populate({
-        path:'comments',
-        populate: {
-          path:'user',
-          select:'local.email local.username'
-        }
-      }).exec(function(err, blog) {
-      if (err)
+      path: 'comments',
+      populate: {
+        path: 'user',
+        select: 'local.email local.username'
+      }
+    }).exec(function(err, blog) {
+      if (err) {
         res.send(err);
+      }
       res.json(blog);
     });
   })
@@ -99,17 +100,19 @@ router.route('/:id')
   // update with this id (accessed at PUT http://localhost:8080/api/bears/:id)
   .put(function(req, res) {
     Blog.findById(req.params.id, function(err, blog) {
-      if (err)
+      if (err) {
         res.send(err);
+      }
 
-      console.log(req.body.title + " : " + req.body.body);
+      console.log(req.body.title + ' : ' + req.body.body);
       blog.title = req.body.title;  // update the blog info
       blog.body = req.body.body;
 
       // save the bear
-      blog.save(function(err) {
-        if (err)
-          res.send(err);
+      blog.save(function(saveErr) {
+        if (saveErr) {
+          res.send(saveErr);
+        }
 
         res.json({ message: 'Blog was updated!' });
       });
@@ -120,9 +123,10 @@ router.route('/:id')
   .delete(function(req, res) {
     mongoose.model('Blog').remove({
       _id: req.params.id
-    }, function(err, blog) {
-      if (err)
-        res.send(err);
+    }, function(mongooseErr, blog) {
+      if (mongooseErr) {
+        res.send(mongooseErr);
+      }
       res.json({ message: 'Successfully deleted' });
     });
   });
@@ -138,15 +142,15 @@ router.route('/:id/comments', isLoggedIn)
         res.send(err);
       } else {
         mongoose.model('Blog').findById({
-          _id: req.params.id}, function(err, blog) {
-            if (err) {
-              res.send(err);
-            } else {
-              blog.comments.push(comment._id);
-              blog.save();
-              res.json(comment);
-            }
-          });
+          _id: req.params.id}, function(mongooseErr, blog) {
+          if (mongooseErr) {
+            res.send(mongooseErr);
+          } else {
+            blog.comments.push(comment._id);
+            blog.save();
+            res.json(comment);
+          }
+        });
       }
     });
   });
@@ -155,10 +159,10 @@ router.route('/:id/comments')
   .get(function(req, res) {
     mongoose.model('Blog').findById({_id: req.params.id})
       .populate({
-        path:'comments',
+        path: 'comments',
         populate: {
-          path:'user',
-          select:'local.email local.username'
+          path: 'user',
+          select: 'local.email local.username'
         }
       })
       .exec(function(err, comments) {
@@ -168,20 +172,20 @@ router.route('/:id/comments')
           console.log(comments[0]);
           res.send(comments);
         }
-      })
-    })
+      });
+  })
 
   .delete(function(req, res) {
-    //mongoose.model('Blog').findById({_id: req.params.id})
+    // mongoose.model('Blog').findById({_id: req.params.id})
     mongoose.model('Blog').remove({
       _id: req.params.id
     }, function(err, blog) {
       if (err) {
         res.send(err);
       } else {
-        res.json({ message: 'Successfully deleted' });
+        res.json({message: 'Successfully deleted'});
       }
-    })
+    });
   });
 
-module.exports = router; 
+module.exports = router;

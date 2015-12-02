@@ -6,6 +6,10 @@ var GitBox = React.createClass({
     return {data: []};
   },
 
+  componentDidMount: function componentDidMount() {
+    this.loadGitData();
+  },
+
   loadGitData: function loadGitData() {
     $.ajax({
       url: this.props.url,
@@ -17,10 +21,6 @@ var GitBox = React.createClass({
         console.log(err);
       },
     });
-  },
-
-  componentDidMount: function componentDidMount() {
-    this.loadGitData();
   },
 
   render: function render() {

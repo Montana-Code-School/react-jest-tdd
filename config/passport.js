@@ -109,7 +109,7 @@ module.exports = function(passport) {
         } else if ( !req.user.local.email ) {
           // ...presumably they're trying to connect a local account
           // BUT let's check if the email used to connect a local account is being used by another user
-          User.findOne({'local.email' : email}, function(err, user) {
+          User.findOne({'local.email': email}, function(err, user) {
             if (err) {
               return done(err);
             }

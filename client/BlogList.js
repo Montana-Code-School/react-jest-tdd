@@ -2,7 +2,7 @@ import React from 'react';
 import AddComment from './AddComment';
 import moment from 'moment';
 import md5 from 'MD5';
-var GRAVATAR_URL = "http://gravatar.com/avatar";
+var GRAVATAR_URL = 'http://gravatar.com/avatar';
 
 class BlogList extends React.Component {
 
@@ -11,7 +11,11 @@ class BlogList extends React.Component {
     this.state = {
       viewComments: false,
       user: []
-    }
+    };
+  }
+
+  componentDidMount() {
+    this.loadUser();
   }
 
   loadUser() {
@@ -20,7 +24,7 @@ class BlogList extends React.Component {
       dataType: 'json',
       cache: false,
       success: function(user) {
-        console.log("USER IN AJAX", user)
+        console.log('USER IN AJAX', user);
         this.setState({user: user});
       }.bind(this),
       error: function(xhr, status, err) {
@@ -29,22 +33,23 @@ class BlogList extends React.Component {
     });
   }
 
-  componentDidMount(){
-    this.loadUser();
-  }
-
   render() {
     var self = this;
     var user;
 
-    if(this.state.user.local){
-      user = this.state.user.local.username
+    if (this.state.user.local) {
+      user = this.state.user.local.username;
     } else {
-      user = "NO USER SIGNED IN"
+      user = 'NO USER SIGNED IN';
     }
 
     var blogData = this.props.data.sort(function dateSort(a, b) {
-        a.date < b.date ? -1 : a.date > b.date ? 1 : 0}).reverse().map(function blogDataMap(blogEntry) {
+      if (a.date === b.date) {
+        return 0;
+      } else {
+        return a.date < b.date ? -1 : 1;
+      }
+    }).reverse().map(function blogDataMap(blogEntry) {
       var comments = blogEntry.comments.map(function blogComments(comment) {
         var commentUser;
         var gravUrl;
@@ -54,22 +59,22 @@ class BlogList extends React.Component {
           var size = 36;
           var email = comment.user.local.email;
           var hash = md5(email);
-          gravUrl = GRAVATAR_URL + "/" + hash + "?s=" + size;
+          gravUrl = GRAVATAR_URL + '/' + hash + '?s=' + size;
         } else {
-          commentUser = "anonymous";
-          gravUrl = "http://www.ipillion.com/images/gravatar.png";
+          commentUser = 'anonymous';
+          gravUrl = 'http://www.ipillion.com/images/gravatar.png';
         }
 
         return (
-            <div className="comment-box" key={comment._id}>
-              <p><img src={gravUrl}/> - {commentUser} - {comment.body}</p>
-            </div>
-          );
+          <div className="comment-box" key={comment._id}>
+            <p><img src={gravUrl}/> - {commentUser} - {comment.body}</p>
+          </div>
+        );
       });
 
       var endResult;
 
-      if (user === "NO USER SIGNED IN") {
+      if (user === 'NO USER SIGNED IN') {
         endResult = (
           <article className="box" key={blogEntry._id}>
             <header><h3>{blogEntry.title}</h3>{moment(blogEntry.date).format('MMM D, YYYY HH:mm')}</header>
@@ -97,7 +102,7 @@ class BlogList extends React.Component {
       </section>
     );
   }
-};
+}
 
 
 module.exports = BlogList;

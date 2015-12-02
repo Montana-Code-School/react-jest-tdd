@@ -2,6 +2,11 @@ import React from 'react';
 
 class AddComment extends React.Component {
 
+  constructor(props) {
+    super(props);
+    this.propTypes = {blogId: React.PropTypes.object};
+  }
+
   handleCommentSubmit(e) {
     console.log('handleCommentSubmit!', this.refs.comment.value);
     var body = this.refs.comment.value;
@@ -42,6 +47,6 @@ class AddComment extends React.Component {
         </div>
           );
   }
-};
+}
 
 module.exports = AddComment;
