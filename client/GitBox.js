@@ -1,16 +1,20 @@
-var React = require('react');
-var Github = require('./Github');
+import React from 'react';
+import Github from './Github';
 
-var GitBox = React.createClass({
-  getInitialState: function getInitialState() {
-    return {data: []};
-  },
+class GitBox extends React.Component {
 
-  componentDidMount: function componentDidMount() {
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: []
+    };
+  }
+
+  componentDidMount() {
     this.loadGitData();
-  },
+  }
 
-  loadGitData: function loadGitData() {
+  loadGitData() {
     $.ajax({
       url: this.props.url,
       dataType: 'json',
@@ -21,15 +25,17 @@ var GitBox = React.createClass({
         console.log(err);
       },
     });
-  },
+  }
 
-  render: function render() {
+  render() {
     return (
       <div>
         <Github data={this.state.data}/>
       </div>
     );
-  },
-});
+  }
+}
+
+GitBox.propTypes = {url: React.PropTypes.string.isRequired};
 
 module.exports = GitBox;

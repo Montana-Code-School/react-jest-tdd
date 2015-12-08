@@ -1,7 +1,7 @@
-var React = require('react');
+import React from 'react';
 
-var Github = React.createClass({
-  render: function render() {
+class Github extends React.Component {
+  render() {
     var commitInfo;
     var gitStuff = this.props.data.map(function gitMap(g) {
       if (g.coms) {
@@ -36,7 +36,9 @@ var Github = React.createClass({
         {gitStuff}
       </div>
     );
-  },
-});
+  }
+}
+
+Github.propTypes = {data: React.PropTypes.array.isRequired};
 
 module.exports = Github;

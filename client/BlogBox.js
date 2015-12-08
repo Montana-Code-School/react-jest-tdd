@@ -37,4 +37,6 @@ class BlogBox extends React.Component {
   }
 }
 
+BlogBox.propTypes = {url: React.PropTypes.string.isRequired};
+
 module.exports = BlogBox;

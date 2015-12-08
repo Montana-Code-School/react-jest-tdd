@@ -24,12 +24,11 @@ class BlogList extends React.Component {
       dataType: 'json',
       cache: false,
       success: function(user) {
-        console.log('USER IN AJAX', user);
         this.setState({user: user});
       }.bind(this),
       error: function(xhr, status, err) {
         console.error(status, err.toString());
-      }.bind(this)
+      }
     });
   }
 
@@ -104,5 +103,6 @@ class BlogList extends React.Component {
   }
 }
 
+BlogList.propTypes = {data: React.PropTypes.array.isRequired};
 
 module.exports = BlogList;

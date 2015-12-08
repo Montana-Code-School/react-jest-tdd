@@ -4,11 +4,9 @@ class AddComment extends React.Component {
 
   constructor(props) {
     super(props);
-    this.propTypes = {blogId: React.PropTypes.object};
   }
 
   handleCommentSubmit(e) {
-    console.log('handleCommentSubmit!', this.refs.comment.value);
     var body = this.refs.comment.value;
     var data = ({ body: body });
     var blogId = this.props.blogId;
@@ -40,7 +38,7 @@ class AddComment extends React.Component {
         <div className="box">
           <form>
               <div className="form-group">
-                <button onClick={this.handleCommentSubmit.bind(this)} type="submit" className="btn btn-default">Add a comment</button>
+                <button onClick={this.handleCommentSubmit.bind(this)} type="submit" className="btn btn-default" ref="button">Add a comment</button>
                 <input type="text" className="form-control" ref="comment" placeholder="comment text"/>
               </div>
           </form>
@@ -48,5 +46,7 @@ class AddComment extends React.Component {
           );
   }
 }
+
+AddComment.propTypes = {blogId: React.PropTypes.object.isRequired};
 
 module.exports = AddComment;

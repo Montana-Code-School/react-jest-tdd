@@ -23,7 +23,7 @@ class BlogForm extends React.Component {
       }.bind(this),
       error: function(xhr, status, err) {
         console.error(status, err.toString());
-      }.bind(this)
+      }
     });
   }
 
@@ -44,7 +44,7 @@ class BlogForm extends React.Component {
       success: function(dataSuccess) {
         console.log('posting data!' + dataSuccess);
         document.location = '/index.html';
-      }.bind(this),
+      },
       error: function(xhr, status, err) {
         console.log('not posting data!');
         console.error(this.props.url, status, err.toString());
@@ -79,5 +79,7 @@ class BlogForm extends React.Component {
            );
   }
 }
+
+BlogForm.propTypes = {url: React.PropTypes.string.isRequired};
 
 module.exports = BlogForm;
